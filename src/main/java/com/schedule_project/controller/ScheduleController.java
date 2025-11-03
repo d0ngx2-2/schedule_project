@@ -1,8 +1,6 @@
 package com.schedule_project.controller;
 
-import com.schedule_project.dto.CreateScheduleRequest;
-import com.schedule_project.dto.CreateScheduleResponse;
-import com.schedule_project.dto.GetOneScheduleResponse;
+import com.schedule_project.dto.*;
 import com.schedule_project.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +30,12 @@ public class ScheduleController {
     @GetMapping("/schedules")
     public List<GetOneScheduleResponse> getAll(@RequestParam(required = false) String name){
         return scheduleService.getAll(name);
+    }
+
+    //Update
+    @PutMapping("/schedules/{id}")
+    public UpdateScheduleResponse update(@PathVariable Long id, @RequestBody UpdateScheduleRequest request){
+        return scheduleService.updateSchedule(id, request);
     }
 
 }

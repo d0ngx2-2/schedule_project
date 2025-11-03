@@ -38,9 +38,8 @@ public class Schedule {
     }
     //기능
     //업데이트
-    public void update(String title, String content, String name) {
+    public void update(String title, String name) {
         this.title = title;
-        this.content = content;
         this.name = name;
     }
 }

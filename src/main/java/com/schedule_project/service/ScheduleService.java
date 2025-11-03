@@ -1,8 +1,6 @@
 package com.schedule_project.service;
 
-import com.schedule_project.dto.CreateScheduleRequest;
-import com.schedule_project.dto.CreateScheduleResponse;
-import com.schedule_project.dto.GetOneScheduleResponse;
+import com.schedule_project.dto.*;
 import com.schedule_project.entity.Schedule;
 import com.schedule_project.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +39,7 @@ public class ScheduleService {
         );
     }
 
-    //한 건 조회
+    //Read(One)
     @Transactional(readOnly = true)
     public GetOneScheduleResponse getOne(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
@@ -57,7 +55,7 @@ public class ScheduleService {
         );
     }
 
-    //선택적 다 건 조회
+    //Read(All/selected)
     @Transactional(readOnly = true)
     public List<GetOneScheduleResponse> getAll(String name) {
         List<Schedule> schedules = scheduleRepository.findAll();
@@ -85,4 +83,31 @@ public class ScheduleService {
         return responses;
     }
 
+    //update
+    public UpdateScheduleResponse updateSchedule(Long id, UpdateScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
+        );
+
+        schedule.update(
+                request.getTitle(),
+                request.getName()
+        );
+
+        return new UpdateScheduleResponse(
+                schedule.getTitle(),
+                schedule.getName(),
+                schedule.getLastModifiedDate()
+        );
+    }
+
+    //dellete
+    @Transactional
+    public void deleteSchedule(Long id) {
+        boolean existence = scheduleRepository.existsById(id);
+
+        if (!existence) {
+            throw new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
+        }
+    }
 }

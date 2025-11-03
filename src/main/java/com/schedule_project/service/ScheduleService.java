@@ -84,10 +84,14 @@ public class ScheduleService {
     }
 
     //update
+    @Transactional
     public UpdateScheduleResponse updateSchedule(Long id, UpdateScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
         );
+        if(!schedule.getPassword().equals(request.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
 
         schedule.update(
                 request.getTitle(),
@@ -101,13 +105,17 @@ public class ScheduleService {
         );
     }
 
-    //dellete
+    //delete
     @Transactional
-    public void deleteSchedule(Long id) {
+    public void deleteSchedule(Long id, String password) {
         boolean existence = scheduleRepository.existsById(id);
 
         if (!existence) {
-            throw new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
+            throw new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.");
         }
+        if(!password.equals(scheduleRepository.findById(id).get().getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        scheduleRepository.deleteById(id);
     }
 }

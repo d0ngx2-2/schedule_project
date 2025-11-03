@@ -38,4 +38,11 @@ public class ScheduleController {
         return scheduleService.updateSchedule(id, request);
     }
 
+    //Delete
+    @DeleteMapping("/schedules/{id}")
+    public void delete(@PathVariable Long id, @RequestBody DeleteScheduleRequest request){
+        scheduleService.deleteSchedule(id, request.getPassword());
+
+    }
+
 }

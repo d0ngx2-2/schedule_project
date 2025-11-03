@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 //JPA 및 Entity class import
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
-    Long id(Long id);
 }

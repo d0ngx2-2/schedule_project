@@ -17,6 +17,7 @@ import java.util.List;
 public class ScheduleService {
     //속성
     private final ScheduleRepository scheduleRepository;
+
     //생성자
     //기능
     //Create
@@ -44,7 +45,7 @@ public class ScheduleService {
     @Transactional(readOnly = true)
     public GetOneScheduleResponse getOne(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 유저 아이디 입니다.")
+                () -> new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
         );
         return new GetOneScheduleResponse(
                 schedule.getId(),
@@ -55,23 +56,33 @@ public class ScheduleService {
                 schedule.getLastModifiedDate()
         );
     }
-    //다 건 조회
+
+    //선택적 다 건 조회
     @Transactional(readOnly = true)
-    public List<GetOneScheduleResponse> getAll() {
+    public List<GetOneScheduleResponse> getAll(String name) {
         List<Schedule> schedules = scheduleRepository.findAll();
 
+        if (name != null && !name.isEmpty()) {
+            schedules = schedules.stream()
+                    .filter(nameList -> nameList.getName().equals(name))
+                    .toList();
+        }
+
+        schedules.sort((lastOne, lastTwo) -> lastTwo.getLastModifiedDate().compareTo(lastOne.getLastModifiedDate()));
+
         List<GetOneScheduleResponse> responses = new ArrayList<>();
-        for (Schedule schedule : schedules) {
-            GetOneScheduleResponse response = new GetOneScheduleResponse(
-                    schedule.getId(),
-                    schedule.getTitle(),
-                    schedule.getContent(),
-                    schedule.getName(),
-                    schedule.getCreateDate(),
-                    schedule.getLastModifiedDate()
-            );
-            responses.add(response);
+        for (Schedule nameList : schedules) {
+            responses.add(new GetOneScheduleResponse(
+                    nameList.getId(),
+                    nameList.getTitle(),
+                    nameList.getContent(),
+                    nameList.getName(),
+                    nameList.getCreateDate(),
+                    nameList.getLastModifiedDate()
+            ));
+
         }
         return responses;
     }
+
 }

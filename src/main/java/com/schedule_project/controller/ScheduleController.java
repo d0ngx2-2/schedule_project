@@ -30,7 +30,8 @@ public class ScheduleController {
 
     //Read(all)
     @GetMapping("/schedules")
-    public List<GetOneScheduleResponse> getAll(){
-        return scheduleService.getAll();
+    public List<GetOneScheduleResponse> getAll(@RequestParam(required = false) String name){
+        return scheduleService.getAll(name);
     }
+
 }

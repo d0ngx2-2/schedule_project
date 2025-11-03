@@ -6,15 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "scheules")
-@EnableJpaAuditing
 public class Schedule {
     //속성
     @Id
@@ -25,9 +22,24 @@ public class Schedule {
     private String name;
     private String password;
     @CreatedDate
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     @LastModifiedDate
-    private LocalDate lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
+
     //생성자
+    public Schedule(String title, String content, String name, String password, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+        this.title = title;
+        this.content = content;
+        this.name = name;
+        this.password = password;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
     //기능
+    //업데이트
+    public void update(String title, String content, String name) {
+        this.title = title;
+        this.content = content;
+        this.name = name;
+    }
 }

@@ -61,9 +61,10 @@ public class ScheduleService {
         List<Schedule> schedules = scheduleRepository.findAll();
 
         if (name != null && !name.isEmpty()) {
-            schedules = schedules.stream()
+            schedules = new ArrayList<>(schedules.stream()
                     .filter(nameList -> nameList.getName().equals(name))
-                    .toList();
+                    .toList()
+            );
         }
 
         schedules.sort((lastOne, lastTwo) -> lastTwo.getLastModifiedDate().compareTo(lastOne.getLastModifiedDate()));

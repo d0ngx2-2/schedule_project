@@ -7,6 +7,8 @@ import com.schedule_project.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ScheduleController {
@@ -27,5 +29,8 @@ public class ScheduleController {
     }
 
     //Read(all)
-
+    @GetMapping("/schedules")
+    public List<GetOneScheduleResponse> getAll(){
+        return scheduleService.getAll();
+    }
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "scheules")
+@Table(name = "schedules")
 public class Schedule {
     //속성
     @Id
@@ -22,18 +22,16 @@ public class Schedule {
     private String name;
     private String password;
     @CreatedDate
-    private LocalDateTime createdDate;
+    private LocalDateTime createDate;
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
     //생성자
-    public Schedule(String title, String content, String name, String password, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public Schedule(String title, String content, String name, String password) {
         this.title = title;
         this.content = content;
         this.name = name;
         this.password = password;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
     }
     //기능
     //업데이트

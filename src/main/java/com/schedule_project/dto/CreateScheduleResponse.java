@@ -3,6 +3,7 @@ package com.schedule_project.dto;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
+//사용자 입력시 응답받을 데이터
 @Getter
 public class CreateScheduleResponse {
     private final long id;

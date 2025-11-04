@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+//입력 시 응답받을 데이터
 @Getter
 public class UpdateScheduleResponse {
     private final String title;

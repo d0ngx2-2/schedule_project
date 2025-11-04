@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -22,11 +21,12 @@ public class Schedule {
     private Long id;
     private String title;
     private String content;
+    @Column(nullable = false)
     private String name;
     private String password;
-    @CreatedDate
+    @CreatedDate // 작성날짜 자동
     private LocalDateTime createDate;
-    @LastModifiedDate
+    @LastModifiedDate// 수정날짜 자동
     private LocalDateTime lastModifiedDate;
 
     //생성자

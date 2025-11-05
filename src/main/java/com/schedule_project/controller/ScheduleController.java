@@ -1,6 +1,6 @@
 package com.schedule_project.controller;
 
-import com.schedule_project.dto.*;
+import com.schedule_project.dto.schedule.*;
 import com.schedule_project.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class ScheduleController {
     //기능
     //Create
     @PostMapping("/schedules")//POST/api/schedules, body에 작성
-    public CreateScheduleResponse save(@RequestBody CreateScheduleRequest request){
+    public CreateScheduleResponse create(@RequestBody CreateScheduleRequest request){
         return scheduleService.saveSchedule(request);
     }
 

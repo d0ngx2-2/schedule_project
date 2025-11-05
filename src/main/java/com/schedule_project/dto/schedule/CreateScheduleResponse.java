@@ -1,12 +1,11 @@
-package com.schedule_project.dto;
+package com.schedule_project.dto.schedule;
 
 import lombok.Getter;
-
 import java.time.LocalDateTime;
 
-//입력 시 응답받을 데이터
+//사용자 입력시 응답받을 데이터
 @Getter
-public class GetOneScheduleResponse {
+public class CreateScheduleResponse {
     private final long id;
     private final String title;
     private final String content;
@@ -14,10 +13,10 @@ public class GetOneScheduleResponse {
     private final LocalDateTime createDate;
     private final LocalDateTime lastModifiedDate;
 
-    public GetOneScheduleResponse(long id, String title, String content, String name, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
+    public CreateScheduleResponse(long id, String title, String contet, String name, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.title = title;
-        this.content = content;
+        this.content = contet;
         this.name = name;
         this.createDate = createDate;
         this.lastModifiedDate = lastModifiedDate;

@@ -1,4 +1,7 @@
 package com.schedule_project.repository;
 
-public interface CommentRepository {
+import com.schedule_project.entity.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

@@ -1,6 +1,6 @@
 package com.schedule_project.service;
 
-import com.schedule_project.dto.*;
+import com.schedule_project.dto.schedule.*;
 import com.schedule_project.entity.Schedule;
 import com.schedule_project.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;

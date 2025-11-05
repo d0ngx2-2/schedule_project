@@ -19,10 +19,13 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 30, nullable = false)
     private String title;
+    @Column(length = 200, nullable = false)
     private String content;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String password;
     @CreatedDate // 작성날짜 자동
     private LocalDateTime createDate;

@@ -1,6 +1,5 @@
 package com.schedule_project.service;
 
-import com.schedule_project.dto.comment.CreateCommentResponse;
 import com.schedule_project.dto.comment.GetCommentResponse;
 import com.schedule_project.dto.schedule.*;
 import com.schedule_project.entity.Comment;
@@ -71,9 +70,7 @@ public class ScheduleService {
                     comment.getModifiedDate()
             ));
         }
-
-
-
+        //반환
         return new GetOneScheduleResponse(
                 schedule.getId(),
                 schedule.getTitle(),

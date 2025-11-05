@@ -1,7 +1,11 @@
 package com.schedule_project.service;
 
+import com.schedule_project.dto.comment.CreateCommentResponse;
+import com.schedule_project.dto.comment.GetCommentResponse;
 import com.schedule_project.dto.schedule.*;
+import com.schedule_project.entity.Comment;
 import com.schedule_project.entity.Schedule;
+import com.schedule_project.repository.CommentRepository;
 import com.schedule_project.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,7 @@ public class ScheduleService {
     //속성
     //하위 층을 속성으로 갖는다.
     private final ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
 
     //생성자[자동생성]
 
@@ -48,20 +53,42 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
         );//id가 존재하지 않는다면 다음과 같은 오류문구 출력
+
+        //해당 일정에 달린 댓글 DB에서 찾기
+        List<Comment> comments = commentRepository.findAll()
+                .stream().filter(seletedCmmt -> seletedCmmt.getSchedule()
+                        .getId()
+                        .equals(id))
+                .toList();
+        //DTO변환
+        List<GetCommentResponse> response = new ArrayList<>();
+        for (Comment comment : comments) {
+            response.add(new GetCommentResponse(
+                    comment.getId(),
+                    comment.getContent(),
+                    comment.getName(),
+                    comment.getCreatedDate(),
+                    comment.getModifiedDate()
+            ));
+        }
+
+
+
         return new GetOneScheduleResponse(
                 schedule.getId(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getName(),
                 schedule.getCreateDate(),
-                schedule.getLastModifiedDate()
+                schedule.getLastModifiedDate(),
+                response
         );
     }
 
     //Read(All/selected)
     //다 건수 조회[name을 입력 시 해당 name이 해당된 일정을 전부 조회 / 입력하지 않을 시 전부 조회] 날짜 내림차 순으로 정렬
     @Transactional(readOnly = true)
-    public List<GetOneScheduleResponse> getAll(String name) {
+    public List<GetAllScheduleResponse> getAll(String name) {
         List<Schedule> schedules = scheduleRepository.findAll(); //DB에서 모든 일정을 찾는다.
 
         if (name != null && !name.isEmpty()) { //이름의 값이 비어있지 않거나, null이 입력되지 않는 경우(사용자 입력이기때문)
@@ -75,9 +102,9 @@ public class ScheduleService {
         // 수정한 날짜 내림차순 정렬
         schedules.sort((lastOne, lastTwo) -> lastTwo.getLastModifiedDate().compareTo(lastOne.getLastModifiedDate()));
         //반환을 위한 형변환
-        List<GetOneScheduleResponse> responses = new ArrayList<>();
+        List<GetAllScheduleResponse> responses = new ArrayList<>();
         for (Schedule nameList : schedules) {
-            responses.add(new GetOneScheduleResponse(
+            responses.add(new GetAllScheduleResponse(
                     nameList.getId(),
                     nameList.getTitle(),
                     nameList.getContent(),

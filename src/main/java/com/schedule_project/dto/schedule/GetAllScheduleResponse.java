@@ -1,29 +1,24 @@
 package com.schedule_project.dto.schedule;
 
-import com.schedule_project.dto.comment.GetCommentResponse;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-//입력 시 응답받을 데이터
 @Getter
-public class GetOneScheduleResponse {
-    private final long id;
+public class GetAllScheduleResponse {
+    private final Long id;
     private final String title;
     private final String content;
     private final String name;
     private final LocalDateTime createDate;
     private final LocalDateTime lastModifiedDate;
-    private final List<GetCommentResponse> commentResponse;
 
-    public GetOneScheduleResponse(long id, String title, String content, String name, LocalDateTime createDate, LocalDateTime lastModifiedDate, List<GetCommentResponse> commentResponse) {
+    public GetAllScheduleResponse(Long id, String title, String content, String name, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.name = name;
         this.createDate = createDate;
         this.lastModifiedDate = lastModifiedDate;
-        this.commentResponse = commentResponse;
     }
 }

@@ -33,7 +33,7 @@
 (N) Comment ────▶ Schedule (1) 
 ```
 
-| Schedule         | Comment          |
+| Schedules         | Comments          |
 | ---------------- | ---------------- |
 | id (PK)          | id (PK)          |
 | title            | content          |
@@ -50,7 +50,7 @@
 
 # API 명세서
 
-## Schedule
+## Schedules
 
 | 기능       | Method     | URL               | Request                                | Response  |
 | -------- | ---------- | ----------------- | -------------------------------------- | --------- |
@@ -60,7 +60,7 @@
 | 일정 수정    | **PUT**    | `/schedules/{id}` | `title`, `content`, `password`         | 수정된 일정 정보 |
 | 일정 삭제    | **DELETE** | `/schedules/{id}` | `password`                             | 삭제 완료 메시지 |
 
-## Comment
+## Comments
 | 기능    | Method     | URL                                    | Request                       | Response  |
 | ----- | ---------- | -------------------------------------- | ----------------------------- | --------- |
 | 댓글 작성 | **POST**   | `/schedules/{id}/comments`             | `content`, `name`, `password` | 생성된 댓글    |

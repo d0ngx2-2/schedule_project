@@ -86,8 +86,9 @@
   "name": "용준",
   "password": "1234"
 }
- Response Body
-json
+```
+#### Response Body
+```json
 {
   "id": 1,
   "title": "스터디 회의",
@@ -96,12 +97,12 @@ json
   "createDate": "2025-11-06T10:15:30",
   "lastModifiedDate": "2025-11-06T10:15:30"
 }
+```
+### 일정 단건 조회 (Get One Schedule)
+**GET** `/schedules/1`
 
-일정 단건 조회 (Get One Schedule)
-GET /schedules/1
-
-Response Body
-json
+#### Response Body
+```json
 {
   "id": 1,
   "title": "스터디 회의",
@@ -119,18 +120,21 @@ json
     }
   ]
 }
-댓글 작성 (Create Comment)
-POST /schedules/1/comments
+```
 
-Request Body
-json
+### 댓글 작성 (Create Comment)
+**POST** `/schedules/1/comments`
+
+#### Request Body
+```json
 {
   "content": "이번 회의 내용 공유 부탁드려요.",
   "name": "철수",
   "password": "abcd"
 }
-Response Body
-json
+```
+#### Response Body
+```json
 {
   "id": 1,
   "content": "이번 회의 내용 공유 부탁드려요.",
@@ -138,26 +142,29 @@ json
   "createdDate": "2025-11-06T11:10:00",
   "modifiedDate": "2025-11-06T11:10:00"
 }
-예외 응답 (Validation & CustomException)
+```
 
- 예시 1 — Validation 실패
-json
+### 예외 응답 (Validation & CustomException)
+
+#### 예시 1 — Validation 실패
+```json
 {
   "status": 400,
   "error": "Bad Request",
   "message": "제목을 입력해 주십시오.",
   "path": "/schedules"
 }
+```
 
- 예시 2 — CustomException
-json
+#### 예시 2 — CustomException
+```json
 {
   "status": 400,
   "error": "Bad Request",
   "message": "존재하지 않는 일정 아이디 입니다.",
   "path": "/schedules/99"
 }
-
+```
 
 ---
 
@@ -176,7 +183,8 @@ Service, Controller, Repository의 3-Layer 구조
 
 ---
 
-📁 프로젝트 구조
+## 프로젝트 구조
+```
 src
 └─ main
 ├─ java/com/schedule_project
@@ -191,4 +199,4 @@ src
 └─ resources
 ├─ application.yml
 └─ data.sql
-
+```

@@ -150,6 +150,7 @@ public class ScheduleService {
         if(!password.equals(scheduleRepository.findById(id).get().getPassword())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
         }//비밀번호가 아닐경우 예외처리
+        commentRepository.deleteByScheduleId(id);
         scheduleRepository.deleteById(id); //참이면 키에 해당하는 일정 삭제
     }
 }

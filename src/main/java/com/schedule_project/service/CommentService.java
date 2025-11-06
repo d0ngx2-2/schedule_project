@@ -26,14 +26,14 @@ public class CommentService {
     public CreateCommentResponse createComment(Long scheduleId, CreateCommentRequest request){
         //scheduleid 조회 없으면 예외처리
         Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "해당 일정이 없습니다."));
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "해당 일정이 없습니다."));
         //위에 조회된 스캐줄의 댓글들만을 필터링한 후 개수 파악
         long count = commentRepository.findAll().stream()
                 .filter(commentList -> commentList.getSchedule().equals(schedule))
                 .count();
         //그 갯수가 10개 이상일 경우 예외처리
         if(count >= 10){
-            throw new CustomException(HttpStatus.CREATED,"일정에는 10개까지의 댓글을 작성할 수 있습니다.");
+            throw new CustomException(HttpStatus.BAD_REQUEST,"일정에는 10개까지의 댓글을 작성할 수 있습니다.");
         }
         //댓글 생성시키기
         Comment comment = new Comment(

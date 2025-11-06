@@ -3,6 +3,7 @@ package com.schedule_project.controller;
 import com.schedule_project.dto.comment.CreateCommentRequest;
 import com.schedule_project.dto.comment.CreateCommentResponse;
 import com.schedule_project.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     //속성
     private final CommentService commentService;
-    //생성자[자동완성]
+
     //기능
+    //댓글 생성 기능[키값에 일치하는 일정에]
     @PostMapping("/schedules/{id}/comments")
-    public CreateCommentResponse create(@PathVariable Long id, @RequestBody CreateCommentRequest request) {
+    public CreateCommentResponse create(@Valid @PathVariable Long id, @Valid @RequestBody CreateCommentRequest request) {
         return commentService.createComment(id, request);
     }
-
 }

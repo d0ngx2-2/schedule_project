@@ -4,9 +4,11 @@ import com.schedule_project.dto.comment.CreateCommentRequest;
 import com.schedule_project.dto.comment.CreateCommentResponse;
 import com.schedule_project.entity.Comment;
 import com.schedule_project.entity.Schedule;
+import com.schedule_project.exception.CustomException;
 import com.schedule_project.repository.CommentRepository;
 import com.schedule_project.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,18 +26,18 @@ public class CommentService {
     public CreateCommentResponse createComment(Long scheduleId, CreateCommentRequest request){
         //scheduleid 조회 없으면 예외처리
         Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 일정이 없습니다."));
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "해당 일정이 없습니다."));
         //위에 조회된 스캐줄의 댓글들만을 필터링한 후 개수 파악
         long count = commentRepository.findAll().stream()
                 .filter(commentList -> commentList.getSchedule().equals(schedule))
                 .count();
         //그 갯수가 10개 이상일 경우 예외처리
         if(count >= 10){
-            throw new IllegalStateException("일정에는 10개의 댓글을 작성할 수 있습니다.");
+            throw new CustomException(HttpStatus.CREATED,"일정에는 10개까지의 댓글을 작성할 수 있습니다.");
         }
-        //댓글 생성
+        //댓글 생성시키기
         Comment comment = new Comment(
-                request.getComment(),
+                request.getContent(),
                 request.getName(),
                 request.getPassword()
         );

@@ -4,9 +4,11 @@ import com.schedule_project.dto.comment.GetCommentResponse;
 import com.schedule_project.dto.schedule.*;
 import com.schedule_project.entity.Comment;
 import com.schedule_project.entity.Schedule;
+import com.schedule_project.exception.CustomException;
 import com.schedule_project.repository.CommentRepository;
 import com.schedule_project.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +52,7 @@ public class ScheduleService {
     @Transactional(readOnly = true)//조회기능
     public GetOneScheduleResponse getOne(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
+                () -> new CustomException(HttpStatus.BAD_REQUEST, "존재하지 않는 일정 아이디 입니다.")
         );//id가 존재하지 않는다면 다음과 같은 오류문구 출력
 
         //해당 일정에 달린 댓글 DB에서 찾기
@@ -119,10 +121,10 @@ public class ScheduleService {
     @Transactional
     public UpdateScheduleResponse updateSchedule(Long id, UpdateScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.")
+                () -> new CustomException(HttpStatus.BAD_REQUEST,"존재하지 않는 일정 아이디 입니다.")
         );//id가 일치하지않을 경우 예외처리
         if(!schedule.getPassword().equals(request.getPassword())){
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(HttpStatus.BAD_REQUEST,"비밀번호가 일치하지 않습니다.");
         }//비밀번호가 일치하지 않을 경우 예외처리
         //수정
         schedule.update(
@@ -143,10 +145,10 @@ public class ScheduleService {
     public void deleteSchedule(Long id, String password) {
         boolean existence = scheduleRepository.existsById(id);
         if (!existence) {
-            throw new IllegalArgumentException("존재하지 않는 일정 아이디 입니다.");
+            throw new CustomException(HttpStatus.BAD_REQUEST,"존재하지 않는 일정 아이디 입니다.");
         }//키값이 아닐경우 예외처리
         if(!password.equals(scheduleRepository.findById(id).get().getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
         }//비밀번호가 아닐경우 예외처리
         scheduleRepository.deleteById(id); //참이면 키에 해당하는 일정 삭제
     }

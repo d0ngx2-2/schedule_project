@@ -40,6 +40,7 @@ public class Comment {
         this.password = password;
     }
     //기능
+    //연결을 위한 set 기능
     public void  setSchedule(Schedule schedule) {
         this.schedule = schedule;
     }
